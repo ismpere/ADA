@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.File;
 public class Practica2 {
 	
 	static ArrayList<Integer> posV1, posV2;
@@ -9,17 +11,17 @@ public class Practica2 {
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
-		String cad1, cad2;
+		String cad1 = ""; String cad2 = "";
 		lMax = 0; prof1 = 0; prof2 = 0;
 		
-		//cad1 = "GCCCTAGCG";
-		//cad2 = "GCGCAATG";
-		cad1 = "a1b2c3d4e";
-		cad2 = "zz1yy2xx3ww4vv";
-		//cad1 = "abcdefghijklmnzyxwvutsrqpo";
-		//cad2 = "opqrstuvwxyzabcdefghijklmn";
-		//cad1 = "bcacbcabbaccbab";
-		//cad2 = "bccabccbbabacbc";
+		try{
+			Scanner fichscan = new Scanner(new File("entrada3.txt"));
+			cad1=fichscan.next();
+			cad2=fichscan.next();
+			fichscan.close();
+		}catch(Exception e){
+			System.out.println(e);
+		}
 		uno = toArrayList(cad1);
 		dos = toArrayList(cad2);
 		System.out.println(extraeCadenas(uno,dos));
