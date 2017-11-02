@@ -3,96 +3,81 @@ import java.util.HashSet;
 public class Practica2 {
 	
 	static ArrayList<Integer> posV1, posV2;
-	static ArrayList<String> cadenas, uno, dos;
-	static ArrayList<String> cadFin;
-	static int cP1, cP2, prof1, prof2, lMax, nivel;
+	static ArrayList<String> cadFin, cadenas, uno, dos;
+	static int prof1, prof2, lMax;
 	
 	public static void main(String[] args){
-		posV1 = new ArrayList<Integer>();
-		posV2 = new ArrayList<Integer>();
-		cadenas = new ArrayList<String>();
-		uno = new ArrayList<String>();
-		dos = new ArrayList<String>();
-		cadFin = new ArrayList<String>();
+		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
+		cadenas = new ArrayList<String>(); cadFin = new ArrayList<String>();
+		uno = new ArrayList<String>(); dos = new ArrayList<String>(); 
+		String cad1, cad2;
 		lMax = 0;
-		cP1 = 0;
-		cP2 = 0;
-		prof1 = 0;
-		prof2 = 0;
-		nivel = 0;
-		uno.add("G"); uno.add("C"); uno.add("C"); uno.add("C"); uno.add("T"); uno.add("A");
-		uno.add("G"); uno.add("C"); uno.add("G");
+		prof1 = 0; prof2 = 0;
+		//cad1 = "a1b2c3d4e";
+		//cad2 = "zz1yy2xx3ww4vv";
+		/*cad1 = "GCCCTAGCG";
+		cad2 = "GCGCAATG";*/
+		cad1 = "bcacbcabbaccbab";
+		cad2 = "bccabccbbabacbc";
+		uno = toArrayList(cad1);
+		dos = toArrayList(cad2);
+		System.out.println(uno);
 		
-		dos.add("G"); dos.add("C"); dos.add("G"); dos.add("C");
-		dos.add("A"); dos.add("A"); dos.add("T"); dos.add("G");
-		
-		//uno.add("A"); uno.add("B"); uno.add("C"); uno.add("D"); uno.add("X");
-		//dos.add("A"); dos.add("C"); dos.add("B"); dos.add("X"); dos.add("D");
-		
-		//[G, C, X, G]
-		//[G, C, G, C, A, A, T, G]
-		
-		//System.out.println(prof1 + "-" + prof2);
-		//System.out.println(toCadena(funcion(uno,dos,0,0, false)));
-		System.out.println(metodoBueno(dos,uno));
-		System.out.println(lMax);
-		//System.out.println(posV1);
-		//System.out.println(posV2);
+		//System.out.println(toCadena(primeraCadena(uno,dos,0,0, false)));
+		System.out.println(extraeCadenas());
+		//System.out.println(lMax);
 	}
-	public static ArrayList<String> metodoBueno(ArrayList<String> x, ArrayList<String> y){
-		aniadeConjunto(cadena(uno, dos,0,0));
+	public static ArrayList<String> extraeCadenas(){
+		while(primeraCadena(uno,dos,0,0,false).isEmpty()){
+			uno.remove(0);
+		}
+		aniadeConjunto(cadenasComunes(uno, dos,0,0));
 		return getMasLargas();
 	}
-	public static ArrayList<String> cadena(ArrayList<String> x, ArrayList<String> y, int c1, int c2){
-		nivel ++;
+	public static ArrayList<String> cadenasComunes(ArrayList<String> x, ArrayList<String> y, int c1, int c2){
 		System.out.println("Se invoca funcion con cadenas: \n" + x + "\n" + y);
-		ArrayList<Integer> posAux1, posAux2;
-		ArrayList<String> cadAux1, cadAux2, cad, cadA;
-		ArrayList<String> cadenas;
+		ArrayList<Integer> posV1Aux, posV2Aux;
+		ArrayList<String> cadAux1, cadAux2, cadComun, cadenas;
 		cadenas = new ArrayList<String>();
 		prof1 = 0; prof2 = 0;
-		cad = funcion(x,y,c1,c2, false);
-		System.out.println("+++++Cadena comun: " + cad + " +++++");
-		prof1 = 0; prof2 = 0;
-		if(!cad.isEmpty()){
-			cadenas.add(toCadena(cad));
-			if(cad.size()>lMax){
-				lMax = cad.size();
+		cadComun = primeraCadena(x,y,c1,c2, false);
+		System.out.println("+++++Cadena comun: " + cadComun + " +++++");
+		//prof1 = 0; prof2 = 0;
+		if(!cadComun.isEmpty()){
+			cadenas.add(toCadena(cadComun));
+			if(cadComun.size()>lMax){
+				lMax = cadComun.size();
 			}
 		}
-		posAux1 = (ArrayList<Integer>) posV1.clone();
-		posAux2 = (ArrayList<Integer>) posV2.clone();
+		posV1Aux = (ArrayList<Integer>) posV1.clone();
+		posV2Aux = (ArrayList<Integer>) posV2.clone();
 		posV1.clear(); posV2.clear();
 		
-		System.out.println("Posiciones: \n" + posAux1 + "\n" + posAux2);
-		while(posAux1.size()>0){
-			cad.remove(cad.size()-1);
-			System.out.println("****Subcadena: " + cad + " ****");
-			int n1 = (posAux1.remove(posAux1.size()-1))+1;
+		System.out.println("Posiciones: \n" + posV1Aux + "\n" + posV2Aux);
+		while(posV1Aux.size()>0){
+			cadComun.remove(cadComun.size()-1);
+			System.out.println("****Subcadena: " + cadComun + " ****");
+			int n1 = (posV1Aux.remove(posV1Aux.size()-1))+1;
 			int n2;
-			System.out.println("Posiciones con nivel " + nivel + ":\n" + posAux1 + "\n" + posAux2);
-			if(posAux2.size()<2){
+			if(posV2Aux.size()<2){
 				n2=c2;
-				cadAux2=y;
 			}else{
-				n2 = (posAux2.remove(posAux2.size()-2))+1;
-				cadAux2 = new ArrayList<String>(dos.subList(n2, dos.size()));
+				n2 = (posV2Aux.remove(posV2Aux.size()-2))+1;
 			}
-			cP1 = n1-1;
-			cP2 = n2-1;
+			cadAux2 = new ArrayList<String>(dos.subList(n2, dos.size()));
 			System.out.println("---Indices=> n1:" + n1 + "  n2: " + n2 + " --");
 			while(n1<uno.size()){
-				cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));
-				cadA = unirArray(cad, cadena(cadAux1, cadAux2,n1,n2));
-				cadenas.addAll(cadA);
-				System.out.println("Cadenas con indice " + n1 + " y nivel " + nivel +" : " +cadenas);
+				cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));;
+				cadenas.addAll(unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2)));
+				if(getMaxLong(cadenas)>lMax){
+					lMax = getMaxLong(cadenas);
+				}
+				//System.out.println("Cadenas con indice " + n1 + " : " +cadenas);
 				n1++;
-				cP1++;
 			}
-			System.out.println("Posiciones fuera del bucle: \n" + posAux1 + "\n" + posAux2);
+			//System.out.println("Posiciones fuera del bucle: \n" + posV1Aux + "\n" + posV2Aux);
 		}	
-		System.out.println("\nDevuelve cadenas: \n" + cadenas);
-		nivel --;
+		//System.out.println("\nDevuelve cadenas: \n" + cadenas);
 		return cadenas;
 	}
 	public static ArrayList<String> unirArray(ArrayList<String> x, ArrayList<String> y){
@@ -130,7 +115,25 @@ public class Practica2 {
 		}
 		return aux;
 	}
-	public static ArrayList<String> funcion (ArrayList<String> x, ArrayList<String> y,
+	public static int getMaxLong(ArrayList<String> x){
+		int l = 0;
+		int lAux;
+		for(int i=0; i<x.size(); i++){
+			lAux = x.get(i).length();
+			if(lAux>l){
+				l=lAux;
+			}
+		}
+		return l;
+	}
+	public static ArrayList<String> toArrayList(String s){
+		ArrayList<String> x = new ArrayList<String>();
+		for(int i=0; i<s.length(); i++){
+			x.add("" + s.charAt(i));
+		}
+		return x;
+	}
+	public static ArrayList<String> primeraCadena (ArrayList<String> x, ArrayList<String> y,
 			int c1, int c2, boolean sl){
 		  int j = 0;
 		  boolean slaux = false;
@@ -144,7 +147,7 @@ public class Practica2 {
 		  }else{
 			ArrayList<String> sublist1 = new ArrayList<String>(x.subList(1,x.size()));
 			prof1++;
-		    while((j<y.size()) && (x.get(0)!=y.get(j))){
+		    while((j<y.size()) && !(x.get(0).equals(y.get(j)))){
 		      j++;
 		    }
 		    if(j<y.size()){
@@ -163,7 +166,10 @@ public class Practica2 {
 		    	sublist2 = y;
 		    }
 		    
-		    listaFin.addAll(funcion(sublist1,sublist2,c1,c2, slaux));
+		    listaFin.addAll(primeraCadena(sublist1,sublist2,c1,c2, slaux));
+		    if(sl){
+		    	prof2--;
+		    }
 		    return listaFin;
 		  }
 		}
