@@ -1,12 +1,20 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
+/**
+ * 
+ * @author Ismael Perez Martin (ismpere)
+ * Implementacion de la busqueda de cadenas comunes en dos cadenas 
+ */
 public class Practica2 {
 	
 	static ArrayList<Integer> posV1, posV2;
 	static ArrayList<String> cadenas, uno, dos, cadFin;
 	static int prof1, prof2, lMax;
-	
+	/**
+	 * Metodo principal
+	 * @param args
+	 */
 	public static void main(String[] args){
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
@@ -30,9 +38,23 @@ public class Practica2 {
 		tFinal = System.nanoTime();
 		System.out.println(((tFinal - tInicio) / 1000000000) + " segundos");
 	}
+	/**
+	 * Devuelve las cadenas mas largas comunes a las dos cadenas 
+	 * @param x Primera cadena
+	 * @param y	Segunda cadena
+	 * @return	z Cadenas comunes mas largas
+	 */
 	public static ArrayList<String> extraeCadenas(ArrayList<String> x, ArrayList<String> y){
 		return getMasLargas(cadenasComunes(x, y,0,0));
 	}
+	/**
+	 * Devuelve las cadenas comunes a las dos cadenas
+	 * @param x	Primera cadena
+	 * @param y	Segunda cadena
+	 * @param c1	Posicion inicial de la primera cadena con respecto a la primera cadena global
+	 * @param c2	Posicion inicial de la segunda cadena con respecto a la segunda cadena global
+	 * @return	z Cadenas comunes a las dos cadenas
+	 */
 	public static ArrayList<String> cadenasComunes(ArrayList<String> x, ArrayList<String> y, int c1, int c2){
 		ArrayList<Integer> posV1Aux, posV2Aux;
 		ArrayList<String> cadAux1, cadAux2, cadComun, cadenas, cadenasAux;
@@ -64,7 +86,7 @@ public class Practica2 {
 			while(n1<uno.size()){
 				cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));
 				cadenasAux = unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2));
-				aniadeConjunto(cadenasAux, cadenas);
+				aniadeConjunto(cadenas, cadenasAux);
 				if(getMaxLong(cadenas)>lMax){
 					lMax = getMaxLong(cadenas);
 				}
@@ -73,6 +95,12 @@ public class Practica2 {
 		}	
 		return cadenas;
 	}
+	/**
+	 * Devuelve la unión de la cabeza con cada una de las i colas
+	 * @param x	Cabeza
+	 * @param y	Colas
+	 * @return	z Cadenas Cabeza + cola(i)
+	 */
 	public static ArrayList<String> unirArray(ArrayList<String> x, ArrayList<String> y){
 		if(x.isEmpty()){
 			return y;
@@ -85,6 +113,11 @@ public class Practica2 {
 			return z;
 		}
 	}
+	/**
+	 * Devuelve los valores del array como un String unido
+	 * @param s Cadena a transformar a String
+	 * @return z cadena transformada a String
+	 */
 	public static String toCadena(ArrayList<String> s){
 		String aux = "";
 		for(int i =0; i<s.size(); i++){
@@ -92,13 +125,23 @@ public class Practica2 {
 		}
 		return aux;
 	}
+	/**
+	 * Devuelve la lista de cadenas no repetidas de las dos cadenas
+	 * @param x	Cadena en la que se guardaran las cadenas
+	 * @param y	Cadenas a evaluar
+	 */
 	public static void aniadeConjunto(ArrayList<String> x, ArrayList<String> y){
-		for(int i =0; i<x.size(); i++){
-			if(!y.contains(x.get(i))){
-				y.add(x.get(i));
+		for(int i =0; i<y.size(); i++){
+			if(!x.contains(y.get(i))){
+				x.add(y.get(i));
 			}
 		}
 	}
+	/**
+	 * Devuelve las cadenas mas largas de la cadena 
+	 * @param x	Cadenas a evaluar
+	 * @return z Cadenas mas largas
+	 */
 	public static ArrayList<String> getMasLargas(ArrayList<String> x){
 		ArrayList<String> aux = new ArrayList<String>();
 		for(int i=0; i<x.size(); i++){
@@ -108,6 +151,11 @@ public class Practica2 {
 		}
 		return aux;
 	}
+	/**
+	 * Devuelve cada letra de un String en un array
+	 * @param s	String a convertir en array
+	 * @return	z array equivalente al String
+	 */
 	public static ArrayList<String> toArrayList(String s){
 		ArrayList<String> x = new ArrayList<String>();
 		for(int i=0; i<s.length(); i++){
@@ -115,6 +163,11 @@ public class Practica2 {
 		}
 		return x;
 	}
+	/**
+	 * Devuelve la mayor longitud de cadena de una lista de cadenas
+	 * @param x	Cadenas a evaluar
+	 * @return z Longitud maxima de cadena
+	 */
 	public static int getMaxLong(ArrayList<String> x){
 		int l = 0;
 		int lAux;
@@ -126,6 +179,18 @@ public class Practica2 {
 		}
 		return l;
 	}
+	/**
+	 * Devuelve la cadena mas larga comun de dos cadenas recorriendo la primera cadena en orden
+	 * Esta cadena se caracteriza ya que su primer caracter es el primer valor comun de las dos cadenas,
+	 * el segundo valor es el primer valor comun entre las dos cadenas recortadas desde el primer valor
+	 * encontrado y asi sucesivamente gasta el final de la cadena.
+	 * @param x	Primera cadena
+	 * @param y	Segunda cadena
+	 * @param c1	Profundidad en la que se empieza a buscar en la primera cadena
+	 * @param c2	Profundidad en la que se empieza a buscar en la segunda cadena
+	 * @param sl	Si la segunda cadena es una sublista o no
+	 * @return	z Cadena mas larga comun recorriendo en orden la primera cadena
+	 */
 	public static ArrayList<String> primeraCadena (ArrayList<String> x, ArrayList<String> y,
 			int c1, int c2, boolean sl){
 		  int j = 0;
