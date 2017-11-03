@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 /**
  * 
  * @author Ismael Perez Martin (ismpere)
@@ -13,9 +15,12 @@ public class Practica2 {
 	static int prof1, prof2, lMax;
 	/**
 	 * Metodo principal
-	 * @param args
+	 * @param Ruta al fichero con las cadenas
 	 */
 	public static void main(String[] args){
+		//Cambiar antes de entregar
+		String fichero = "entrada1.txt";
+		//Cambiar antes de entregar
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
@@ -24,7 +29,7 @@ public class Practica2 {
 		double tInicio, tFinal;
 		
 		try{
-			Scanner fichscan = new Scanner(new File("entrada6.txt"));
+			Scanner fichscan = new Scanner(new File(fichero));
 			cad1=fichscan.next();
 			cad2=fichscan.next();
 			fichscan.close();
@@ -34,9 +39,19 @@ public class Practica2 {
 		uno = toArrayList(cad1);
 		dos = toArrayList(cad2);
 		tInicio = System.nanoTime();
-		System.out.println(extraeCadenas(uno,dos));
+		ArrayList<String> resultado = extraeCadenas(uno,dos);
 		tFinal = System.nanoTime();
-		System.out.println(((tFinal - tInicio) / 1000000000) + " segundos");
+		
+		PrintWriter escribeResult = null;
+		try {
+			escribeResult = new PrintWriter("cadenas.txt");
+			for(int i=0; i<resultado.size(); i++){
+				escribeResult.write(resultado.get(i) + "\n");
+			}
+			escribeResult.write("\nHa tardado: " + ((tFinal - tInicio) / 1000000000) + " segundos");
+			escribeResult.close();
+		} catch (IOException E) {
+		}
 	}
 	/**
 	 * Devuelve las cadenas mas largas comunes a las dos cadenas 
