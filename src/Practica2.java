@@ -13,9 +13,10 @@ public class Practica2 {
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
 		String cad1 = ""; String cad2 = "";
 		lMax = 0; prof1 = 0; prof2 = 0;
+		double tInicio, tFinal;
 		
 		try{
-			Scanner fichscan = new Scanner(new File("entrada3.txt"));
+			Scanner fichscan = new Scanner(new File("entrada6.txt"));
 			cad1=fichscan.next();
 			cad2=fichscan.next();
 			fichscan.close();
@@ -24,16 +25,17 @@ public class Practica2 {
 		}
 		uno = toArrayList(cad1);
 		dos = toArrayList(cad2);
+		tInicio = System.nanoTime();
 		System.out.println(extraeCadenas(uno,dos));
+		tFinal = System.nanoTime();
+		System.out.println(((tFinal - tInicio) / 1000000000) + " segundos");
 	}
 	public static ArrayList<String> extraeCadenas(ArrayList<String> x, ArrayList<String> y){
-		aniadeConjunto(cadenasComunes(x, y,0,0));
-		return getMasLargas();
+		return getMasLargas(cadenasComunes(x, y,0,0));
 	}
 	public static ArrayList<String> cadenasComunes(ArrayList<String> x, ArrayList<String> y, int c1, int c2){
 		ArrayList<Integer> posV1Aux, posV2Aux;
-		ArrayList<String> cadAux1, cadAux2, cadComun;
-		ArrayList<String> cadenas;
+		ArrayList<String> cadAux1, cadAux2, cadComun, cadenas, cadenasAux;
 		cadenas = new ArrayList<String>();
 		prof1 = 0; prof2 = 0;
 		cadComun = primeraCadena(x,y,c1,c2, false);
@@ -61,7 +63,8 @@ public class Practica2 {
 			}
 			while(n1<uno.size()){
 				cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));
-				cadenas.addAll(unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2)));
+				cadenasAux = unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2));
+				aniadeConjunto(cadenasAux, cadenas);
 				if(getMaxLong(cadenas)>lMax){
 					lMax = getMaxLong(cadenas);
 				}
@@ -89,17 +92,18 @@ public class Practica2 {
 		}
 		return aux;
 	}
-	public static void aniadeConjunto(ArrayList<String> x){
+	public static void aniadeConjunto(ArrayList<String> x, ArrayList<String> y){
 		for(int i =0; i<x.size(); i++){
-			if(!cadFin.contains(x.get(i)))
-					cadFin.add(x.get(i));
+			if(!y.contains(x.get(i))){
+				y.add(x.get(i));
+			}
 		}
 	}
-	public static ArrayList<String> getMasLargas(){
+	public static ArrayList<String> getMasLargas(ArrayList<String> x){
 		ArrayList<String> aux = new ArrayList<String>();
-		for(int i=0; i<cadFin.size(); i++){
-			if(cadFin.get(i).length()==lMax){
-				aux.add(cadFin.get(i));
+		for(int i=0; i<x.size(); i++){
+			if(x.get(i).length()==lMax){
+				aux.add(x.get(i));
 			}
 		}
 		return aux;
