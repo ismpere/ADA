@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 /**
  * 
  * @author Ismael Perez Martin (ismpere)
- * Implementacion de la busqueda de cadenas comunes en dos cadenas 
+ * Implementacion de la busqueda de cadenas comunes mas largas en dos cadenas 
  */
 public class Practica2 {
 	
@@ -18,15 +18,18 @@ public class Practica2 {
 	 * @param Ruta al fichero con las cadenas
 	 */
 	public static void main(String[] args){
-		//Cambiar antes de entregar
-		String fichero = "entrada1.txt";
-		//Cambiar antes de entregar
+		String fichero = null;
+		try{
+			fichero = args[0];
+		}catch(java.lang.ArrayIndexOutOfBoundsException e){
+			System.out.println("Introduzca una ruta válida al fichero de cadenas.");
+			System.exit(0);
+		}
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
 		String cad1 = ""; String cad2 = "";
 		lMax = 0; prof1 = 0; prof2 = 0;
-		double tInicio, tFinal;
 		
 		try{
 			Scanner fichscan = new Scanner(new File(fichero));
@@ -38,17 +41,18 @@ public class Practica2 {
 		}
 		uno = toArrayList(cad1);
 		dos = toArrayList(cad2);
-		tInicio = System.nanoTime();
 		ArrayList<String> resultado = extraeCadenas(uno,dos);
-		tFinal = System.nanoTime();
 		
 		PrintWriter escribeResult = null;
 		try {
 			escribeResult = new PrintWriter("cadenas.txt");
-			for(int i=0; i<resultado.size(); i++){
-				escribeResult.write(resultado.get(i) + "\n");
+			if(resultado.isEmpty()){
+				escribeResult.write("No hay cadenas comunes");
+			}else{
+				for(int i=0; i<resultado.size(); i++){
+					escribeResult.write(resultado.get(i) + "\n");
+				}
 			}
-			escribeResult.write("\nHa tardado: " + ((tFinal - tInicio) / 1000000000) + " segundos");
 			escribeResult.close();
 		} catch (IOException E) {
 		}
@@ -74,7 +78,6 @@ public class Practica2 {
 		ArrayList<Integer> posV1Aux, posV2Aux;
 		ArrayList<String> cadAux1, cadAux2, cadComun, cadenas, cadenasAux;
 		cadenas = new ArrayList<String>();
-		prof1 = 0; prof2 = 0;
 		cadComun = primeraCadena(x,y,c1,c2, false);
 		prof1 = 0; prof2 = 0;
 		if(!cadComun.isEmpty()){
