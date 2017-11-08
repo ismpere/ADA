@@ -17,7 +17,6 @@ public class Practica2 {
 	static int prof1, prof2, lMax;
 	/**
 	 * Metodo principal
-	 * @param Ruta al fichero con las cadenas
 	 */
 	public static void main(String[] args){
 		String fichero = "entrada.txt";
