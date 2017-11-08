@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 /**
  * 
- * @author Ismael Perez Martin (ismpere)
+ * @author ismpere
+ * @author davgome
+ * @author vicrojo
  * Implementacion de la busqueda de cadenas comunes mas largas en dos cadenas 
  */
 public class Practica2 {
@@ -18,13 +20,7 @@ public class Practica2 {
 	 * @param Ruta al fichero con las cadenas
 	 */
 	public static void main(String[] args){
-		String fichero = null;
-		try{
-			fichero = args[0];
-		}catch(java.lang.ArrayIndexOutOfBoundsException e){
-			System.out.println("Introduzca una ruta válida al fichero de cadenas.");
-			System.exit(0);
-		}
+		String fichero = "entrada.txt";
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
@@ -41,11 +37,12 @@ public class Practica2 {
 		}
 		uno = toArrayList(cad1);
 		dos = toArrayList(cad2);
+		
 		ArrayList<String> resultado = extraeCadenas(uno,dos);
 		
 		PrintWriter escribeResult = null;
 		try {
-			escribeResult = new PrintWriter("cadenas.txt");
+			escribeResult = new PrintWriter("salida_p2_ismpere_vicrojo_davgome.txt");
 			if(resultado.isEmpty()){
 				escribeResult.write("No hay cadenas comunes");
 			}else{
@@ -55,6 +52,7 @@ public class Practica2 {
 			}
 			escribeResult.close();
 		} catch (IOException E) {
+			System.out.println("No se puede crear el fichero de salida");
 		}
 	}
 	/**
@@ -211,16 +209,16 @@ public class Practica2 {
 	 */
 	public static ArrayList<String> primeraCadena (ArrayList<String> x, ArrayList<String> y,
 			int c1, int c2, boolean sl){
-		  int j = 0;
-		  boolean slaux = false;
 		  ArrayList<String> listaFin = new ArrayList<String>();
-		  ArrayList<String> sublist2 = new ArrayList<String>();
 		  if(x.isEmpty() || y.isEmpty()){
 			if(sl){
 	    		prof2--;
 	    	}
 		    return listaFin;
 		  }else{
+			int j = 0;
+			boolean slaux = false;
+			ArrayList<String> sublist2 = new ArrayList<String>();
 			ArrayList<String> sublist1 = new ArrayList<String>(x.subList(1,x.size()));
 			prof1++;
 		    while((j<y.size()) && !(x.get(0).equals(y.get(j)))){
