@@ -25,6 +25,7 @@ public class Practica2 {
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
 		String cad1 = ""; String cad2 = "";
 		lMax = 0; prof1 = 0; prof2 = 0;
+		double tInicio, tFinal;
 		
 		try{
 			Scanner fichscan = new Scanner(new File(fichero));
@@ -37,7 +38,10 @@ public class Practica2 {
 		uno = toArrayList(cad1);
 		dos = toArrayList(cad2);
 		
+		tInicio = System.nanoTime();
 		ArrayList<String> resultado = extraeCadenas(uno,dos);
+		tFinal = System.nanoTime();
+		System.out.println((tFinal-tInicio)/1000000000);
 		
 		PrintWriter escribeResult = null;
 		try {
@@ -61,7 +65,7 @@ public class Practica2 {
 	 * @return	z Cadenas comunes mas largas
 	 */
 	public static ArrayList<String> extraeCadenas(ArrayList<String> x, ArrayList<String> y){
-		return getMasLargas(cadenasComunes(x, y,0,0));
+		return getMasLargas(cadenasComunes(x, y,0,0,0));
 	}
 	/**
 	 * Devuelve las cadenas comunes a las dos cadenas
@@ -71,13 +75,14 @@ public class Practica2 {
 	 * @param c2	Posicion inicial de la segunda cadena con respecto a la segunda cadena global
 	 * @return	z Cadenas comunes a las dos cadenas
 	 */
-	public static ArrayList<String> cadenasComunes(ArrayList<String> x, ArrayList<String> y, int c1, int c2){
+	public static ArrayList<String> cadenasComunes(ArrayList<String> x, ArrayList<String> y, int c1, int c2,
+			int tamSc){
 		ArrayList<Integer> posV1Aux, posV2Aux;
 		ArrayList<String> cadAux1, cadAux2, cadComun, cadenas, cadenasAux;
 		cadenas = new ArrayList<String>();
 		cadComun = primeraCadena(x,y,c1,c2, false);
 		prof1 = 0; prof2 = 0;
-		if(!cadComun.isEmpty()){
+		if(!cadComun.isEmpty() && (cadComun.size()+tamSc)>=lMax){
 			cadenas.add(toCadena(cadComun));
 			if(cadComun.size()>lMax){
 				lMax = cadComun.size();
@@ -89,23 +94,28 @@ public class Practica2 {
 		
 		while(posV1Aux.size()>0){
 			cadComun.remove(cadComun.size()-1);
+			tamSc = tamSc + cadComun.size();
 			int n1 = (posV1Aux.remove(posV1Aux.size()-1))+1;
-			int n2;
-			if(posV2Aux.size()<2){
-				n2=c2;
-				cadAux2=y;
-			}else{
-				n2 = (posV2Aux.remove(posV2Aux.size()-2))+1;
-				cadAux2 = new ArrayList<String>(dos.subList(n2, dos.size()));
-			}
-			while(n1<uno.size()){
-				cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));
-				cadenasAux = unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2));
-				aniadeConjunto(cadenas, cadenasAux);
-				if(getMaxLong(cadenas)>lMax){
-					lMax = getMaxLong(cadenas);
+			if(((uno.size()-(n1-1)))+tamSc>=lMax){
+				int n2;
+				if(posV2Aux.size()<2){
+					n2=c2;
+					cadAux2=y;
+				}else{
+					n2 = (posV2Aux.remove(posV2Aux.size()-2))+1;
+					cadAux2 = new ArrayList<String>(dos.subList(n2, dos.size()));
 				}
-				n1++;
+				while(n1<uno.size()){
+					cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));
+					cadenasAux = unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2, cadComun.size()));
+					aniadeConjunto(cadenas, cadenasAux);
+					if(getMaxLong(cadenas)>lMax){
+						lMax = getMaxLong(cadenas);
+					}
+					n1++;
+				}
+			}else{
+				return cadenas;
 			}
 		}	
 		return cadenas;
