@@ -19,7 +19,7 @@ public class Practica2 {
 	 * Metodo principal
 	 */
 	public static void main(String[] args){
-		String fichero = "entrada7.txt";
+		String fichero = "entrada.txt";
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
