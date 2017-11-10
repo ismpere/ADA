@@ -19,7 +19,7 @@ public class Practica2 {
 	 * Metodo principal
 	 */
 	public static void main(String[] args){
-		String fichero = "entrada7.txt";
+		String fichero = "entrada.txt";
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
@@ -59,10 +59,9 @@ public class Practica2 {
 		}
 	}
 	/**
-	 * Devuelve las cadenas mas largas comunes a las dos cadenas 
+	 * Almacena en cadenas las cadenas mas largas comunes a las pasadas como parametros
 	 * @param x Primera cadena
 	 * @param y	Segunda cadena
-	 * @return	z Cadenas comunes mas largas
 	 */
 	public static void extraeCadenas(ArrayList<String> x, ArrayList<String> y){
 		cadenasComunes(x, y, 0, 0, "");
@@ -70,12 +69,12 @@ public class Practica2 {
 		System.out.println(cadenas);
 	}
 	/**
-	 * Devuelve las cadenas comunes a las dos cadenas
+	 * Almacena en cadenas las cadenas comunes a las dos pasadas como parametros
 	 * @param x	Primera cadena
 	 * @param y	Segunda cadena
 	 * @param c1	Posicion inicial de la primera cadena con respecto a la primera cadena global
 	 * @param c2	Posicion inicial de la segunda cadena con respecto a la segunda cadena global
-	 * @return	z Cadenas comunes a las dos cadenas
+	 * @param sc	Subcadena prefijo
 	 */
 	public static void cadenasComunes(ArrayList<String> x, ArrayList<String> y, int c1, int c2,
 			 String sc){
@@ -137,7 +136,7 @@ public class Practica2 {
 		return aux;
 	}
 	/**
-	 * Devuelve la lista de cadenas no repetidas de las dos cadenas
+	 * Elimina de cadenas las cadenas repetidas
 	 * @param x	Cadena en la que se guardaran las cadenas
 	 * @param y	Cadenas a evaluar
 	 */
