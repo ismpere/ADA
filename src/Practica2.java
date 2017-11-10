@@ -19,7 +19,7 @@ public class Practica2 {
 	 * Metodo principal
 	 */
 	public static void main(String[] args){
-		String fichero = "entrada.txt";
+		String fichero = "entrada7.txt";
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
@@ -96,7 +96,7 @@ public class Practica2 {
 			cadComun.remove(cadComun.size()-1);
 			tamSc = tamSc + cadComun.size();
 			int n1 = (posV1Aux.remove(posV1Aux.size()-1))+1;
-			if(((uno.size()-(n1-1)))+tamSc>=lMax){
+			if(((uno.size()-(n1)))+tamSc>=lMax){
 				int n2;
 				if(posV2Aux.size()<2){
 					n2=c2;
@@ -107,7 +107,7 @@ public class Practica2 {
 				}
 				while(n1<uno.size()){
 					cadAux1 = new ArrayList<String>(uno.subList(n1, uno.size()));
-					cadenasAux = unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2, cadComun.size()));
+					cadenasAux = unirArray(cadComun, cadenasComunes(cadAux1, cadAux2,n1,n2, tamSc));
 					aniadeConjunto(cadenas, cadenasAux);
 					if(getMaxLong(cadenas)>lMax){
 						lMax = getMaxLong(cadenas);
