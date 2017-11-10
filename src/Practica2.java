@@ -19,7 +19,7 @@ public class Practica2 {
 	 * Metodo principal
 	 */
 	public static void main(String[] args){
-		String fichero = "entrada6.txt";
+		String fichero = "entrada7.txt";
 		posV1 = new ArrayList<Integer>(); posV2 = new ArrayList<Integer>();
 		uno = new ArrayList<String>(); dos = new ArrayList<String>();
 		cadFin = new ArrayList<String>(); cadenas = new ArrayList<String>();
@@ -84,10 +84,8 @@ public class Practica2 {
 		cadComun = primeraCadena(x,y,c1,c2, false);
 		String cadena = sc + toCadena(cadComun);
 		prof1 = 0; prof2 = 0;
-		if(!cadComun.isEmpty() && (cadena.length())>=lMax){
-			if(!cadenas.contains(cadena)){
-				cadenas.add(cadena);
-			}
+		if(!cadComun.isEmpty() && (cadena.length())>=lMax && !cadenas.contains(cadena)){
+			cadenas.add(cadena);
 			if(cadena.length()>lMax){
 				lMax = cadena.length();
 			}
