@@ -1,0 +1,14 @@
+#User1 escribe #P1
+#User1 lee #P4
+#User2 escribe #P2
+#User2 escribe #P3
+#User2 escribe #P4
+#User3 escribe #P5
+#User4 escribe #P6
+#User4 lee #P1
+#User4 lee #P5
+#P1 cita #P3
+#P3 cita #P2
+#P4 cita #P3
+#P4 cita #P5
+#P5 cita #P2

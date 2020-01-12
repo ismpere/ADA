@@ -1,0 +1,5 @@
+#User1 escribe #P1
+#User2 escribe #P2
+#User3 escribe #P3
+#P1 cita #P2
+#P3 cita #P2
