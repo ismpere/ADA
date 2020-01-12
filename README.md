@@ -4,7 +4,7 @@ Asignatura Análisis y Diseño de Algoritmos del GII de la UVa (Grado en Ingenie
 
 Subject Analysis and Design of Algorithms of the CS BSc of the UVa (Bachelor of Computer Science from the University of Valladolid)
 
-### Prerrequisitos - Prerequisites
+### Prerequisitos - Prerequisites
 
 El software necesario para ejecutar las prácticas:
 
